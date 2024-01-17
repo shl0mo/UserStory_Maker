@@ -1,0 +1,38 @@
+<form action="http://localhost:5000/makeREADME" method="post">
+	<div>
+	<div>
+		<label for="title">
+			<h1>Titulo</h1>
+		</label>
+		<input id="title" type="text" name="title" />
+	</div>
+	<div>
+		<label for="interface-behavior">
+			<h1>Comportamento da Interface</h1>
+		</label>
+		<input id="interface-behavior" type="text" name="interface-behavior" />
+	</div>
+	<div>
+		<label for="observations">
+			<h1>Observações</h1>
+		</label>
+		<input id="observations" type="text" name="observations" />
+	</div>
+	<div>
+		<h1>Tarefas</h1>
+		<div>
+			<label for="frontend-tasks">
+				<h2>Frontend</h2>
+			</label>
+			<textarea id="frontend-tasks" name="frontend-tasks"></textarea>
+		</div>
+		<div>
+			<label for="backend-tasks">
+				<h2>Backend</h2>
+			</label>
+			<textarea id="backend-tasks" name="backend-tasks"></textarea>
+		</div>
+	</div>
+	</div>
+	<button type="submit">Gerar README</button>
+</form>
