@@ -62,19 +62,19 @@ app.post('/makeREADME', (req, res) => {
 	const frontendTasksTable = makeTasksTable(tasksTableHeader, frontendTasksLines)
 	const backendTasksTable = makeTasksTable(tasksTableHeader, backendTasksLines)
 	let readmeString = `
-	# ${title}
-	## História do Usuário
-	${userStory}
-	## Modelo da Interface do Usuário
-	## Comportamento da Interface
-	${interfaceBehavior}
-	### Observações
-	${observations}
-	## Tarefas
-	### Frontend
-	${frontendTasksTable}
-	### Backend
-	${backendTasksTable}
+		# ${title}
+		## História do Usuário
+		${userStory}
+		## Modelo da Interface do Usuário
+		## Comportamento da Interface
+		${interfaceBehavior}
+		### Observações
+		${observations}
+		## Tarefas
+		### Frontend
+		${frontendTasksTable}
+		### Backend
+		${backendTasksTable}
 	`
 	while (readmeString.includes('	')) readmeString = readmeString.replace('	', '')
 	fs.writeFile('README.md', readmeString, (err) => {
