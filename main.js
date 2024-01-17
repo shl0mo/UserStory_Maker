@@ -44,6 +44,8 @@ const makeTasksTable = (tasksTableHeader, tasksLines) => {
 app.post('/makeREADME', (req, res) => {
 	const title = req.body.title
 	const userStory = req.body.userStory
+	const imageAlt = req.body.imageAlt
+	const interfaceModelImageSrc = req.body.interfaceModelImageSrc
 	const interfaceBehavior = req.body.interfaceBehavior
 	const observations = req.body.observations
 	const frontendTasks = req.body.frontendTasks
@@ -66,6 +68,7 @@ app.post('/makeREADME', (req, res) => {
 		## História do Usuário
 		${userStory}
 		## Modelo da Interface do Usuário
+		[${imageAlt}](${interfaceModelImageSrc})
 		## Comportamento da Interface
 		${interfaceBehavior}
 		### Observações
