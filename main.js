@@ -61,21 +61,22 @@ app.post('/makeREADME', (req, res) => {
 	const backendTasksLines = backendTasks.split('\n')
 	const frontendTasksTable = makeTasksTable(tasksTableHeader, frontendTasksLines)
 	const backendTasksTable = makeTasksTable(tasksTableHeader, backendTasksLines)
-	const readmeString = `
-		# ${title}
-		## História do Usuário
-		${userStory}
-		## Modelo da Interface do Usuário
-		## Comportamento da Interface
-		${interfaceBehavior}
-		### Observações
-		${observations}
-		## Tarefas
-		### Frontend
-		${frontendTasksTable}
-		### Backend
-		${backendTasksTable}
+	let readmeString = `
+	# ${title}
+	## História do Usuário
+	${userStory}
+	## Modelo da Interface do Usuário
+	## Comportamento da Interface
+	${interfaceBehavior}
+	### Observações
+	${observations}
+	## Tarefas
+	### Frontend
+	${frontendTasksTable}
+	### Backend
+	${backendTasksTable}
 	`
+	while (readmeString.includes('	')) readmeString = readmeString.replace('	', '')
 	fs.writeFile('README.md', readmeString, (err) => {
 		if (err) return res.status(500).json({ msg: "Erro ao tentar gerar README" })
 		return res.status(200).json({ msg: "README gerado com sucesso" })
