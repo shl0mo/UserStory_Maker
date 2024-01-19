@@ -1,5 +1,48 @@
+<head>
+
+	<script>
+		function addImageInputsFields () {
+			const imageFieldsContainer = document.querySelector('#image-fields-container')
+			let imageFieldsContainerInnerHTML = imageFieldsContainer.innerHTML
+			const i = document.querySelectorAll('[id*="image-alt"]').length
+			imageFieldsContainerInnerHTML = imageFieldsContainerInnerHTML + `
+				<div>
+					<input id="image-alt-${i + 1}" type="text" name="imageAlt" placeholder="Descrição da imagem">
+					<input id="interface-model-image-src-${i + 1}" type="text" name="interfaceModelImageSrc" placeholder="src da imagem">
+					<button id="delete-image-button-${i + 1}" type="button">Deletar</button>
+				</div>
+			`
+			imageFieldsContainer.innerHTML = imageFieldsContainerInnerHTML
+		}
+
+		/*function addTaskInputsFields (taskType) {
+			if (taskType !== 'backend' && taskType !== 'frontend') {
+				console.log('addTaskInputsFields(): Escolha um tipo de tarefa válido')
+				return
+			}
+			const taskFieldsContainer = document.querySelector(`#${taskType}-fields-container`)
+			let taskFieldsContainerInnerHTML = taskFieldsContainer.innerHTML
+			const i = document.querySelectorAll('[id*="image-alt"]').length
+			taskFieldsContainerInnerHTML = taskFieldsContainerInnerHTML + `
+				<div>
+					<input id="task-description-${i + 1}" type="text" name="imageAlt" placeholder="Descrição da imagem">
+					<input id="interface-model-image-src-${i + 1}" type="text" name="interfaceModelImageSrc" placeholder="src da imagem">
+					<button id="delete-image-button-${i + 1}" type="button">Deletar</button>
+				</div>
+			`
+			taskFieldsContainer.innerHTML = taskFieldsContainerInnerHTML
+		}*/
+	</script>
+</head>
+<body>
 <form action="http://localhost:5000/makeREADME" method="post">
 	<div>
+	<div>
+		<label for="user-story-id">
+			<h1>Id da História de Usuário</h1>
+		</label>
+		<input id="user-story-id" type="text" name="userStoryId" />
+	</div>
 	<div>
 		<label for="title">
 			<h1>Titulo</h1>
@@ -9,16 +52,16 @@
 	<div>
 		<label for="user-story">
 			<h1>História do Usuário</h1>
-			<textarea id="user-story" name="userStory"></textarea>
 		</label>
+		<textarea id="user-story" name="userStory"></textarea>
 	</div>
 	<div>
 		<label>
-			<h1>Modelo da Interface</h1>
+			<h1>Modelo(s) da Interface</h1>
 		</label>
-		<div>
-			<input id="image-alt" type="text" name="imageAlt" />
-			<input id="interfaceModelImageSrc" type="text" name="interfaceModelImageSrc" placeholder="src da imagem do modelo da interface" />
+		<button type="button" onclick="addImageInputsFields()">Adicionar Imagem</button>
+		<div id="image-fields-container">
+			
 		</div>
 	</div>
 	<div>
@@ -51,3 +94,4 @@
 	</div>
 	<button type="submit">Gerar README</button>
 </form>
+</body>
