@@ -1,6 +1,88 @@
 <head>
+	<title>User Story README Maker</title>
+	<style>
+		:root {
+			--main-color: #41658A;
+		}
+		
+		* {
+			margin: 0;
+		}
+		body {
+			font-family: sans-serif;
+			background-color: var(--main-color);
+		}
 
+		header {
+			height: 80px;
+			background-color: white;
+		}
+
+		h1, h2 {
+			margin-top: 10px;
+		}
+
+		input, button, textarea  {
+			margin-top: 10px;
+			border: 1px solid rgba(0,0,0,0.3);
+		}
+
+		textarea {
+			height: 100px;
+			width: 80%;
+			resize: none;
+		}
+
+		input {
+			padding: 10px;
+			font-size: 14px;
+		}
+
+		main {
+			position: relative;
+			margin: 50px auto;
+			align-self: center;
+			flex-direction: column;
+			align-items: center;
+			background-color: white;
+			width: 30%;
+			/*border-radius: 1rem;*/
+			padding: 50px;
+		}
+
+		button {
+			padding: 10px;
+			border-radius: 0.3rem;
+			color: white;
+			border: none;
+			font-size: 1rem;
+			cursor: pointer;
+		}
+
+		.add-button {
+			background-color: var(--main-color);
+		}
+
+		.submit-button {
+			margin-top: 40px;
+			background-color: #70A37F;
+			font-weight: bold;
+			font-size: 1.2rem;
+			padding: 15px;
+		}	
+
+		.delete-button {
+			background-color: #B57474;
+		}
+
+		form {
+			text-align: center;
+		}
+	</style>
 	<script>
+		function getFieldsData () {
+
+		}
 		function getStringBetween(char1, char2, from='') {
 			return from.split(char1)[1].split(char2)[0]
 		}
@@ -13,7 +95,7 @@
 			       <div id="image-fields-container-${i + 1}">
 					<input id="image-alt-${i + 1}" type="text" placeholder="Descrição da imagem">
 					<input id="interface-model-image-src-${i + 1}" type="text" placeholder="src da imagem">
-				    <button onclick="deleteImageFieldsContainer(${i + 1})" type="button">Deletar</button>
+				    <button onclick="deleteImageFieldsContainer(${i + 1})" type="button" class="delete-button">Excluir</button>
 				</div>
 			`
 			imageFieldsContainer.innerHTML = imageFieldsContainerInnerHTML
@@ -35,7 +117,7 @@
 				<div id="${taskType}-task-fields-container-${i + 1}">
 					<input id="task-description-${i + 1}" type="text" placeholder="Descrição da tarefa">
 					<input id="task-assignment-${i + 1}" type="text" placeholder="Atribuição">
-					<button onclick="deleteTaskFieldsContainer(${i + 1}, '${taskType}')" type="button">Deletar</button>
+					<button onclick="deleteTaskFieldsContainer(${i + 1}, '${taskType}')" type="button" class="delete-button">Excluir</button>
 				</div>
 			`
 			tasksFieldsContainer.innerHTML = tasksFieldsContainerInnerHTML
@@ -46,26 +128,28 @@
 		}
 	</script>
 </head>
-<body>
+<body onload="getFieldsData()">
+<!--header></header-->
+<main>
 <form action="http://localhost:5000/makeREADME" method="post">
 	<div>
 	<div>
 		<label for="title">
 			<h1>Titulo</h1>
 		</label>
-		<input id="title" type="text" name="title" />
+		<input id="title" type="text" name="title" placeholder="ex.: [US01]: Página Inicial"/>
 	</div>
 	<div>
 		<label for="user-story">
 			<h1>História do Usuário</h1>
 		</label>
-		<textarea id="user-story" name="userStory"></textarea>
+		<textarea id="user-story" name="userStory" placeholder="Como [...], eu gostaria de [...] de modo que [...]."></textarea>
 	</div>
 	<div>
 		<label>
 			<h1>Modelo(s) da Interface</h1>
 		</label>
-		<button type="button" onclick="addImageInputsFields()">Adicionar Imagem</button>
+		<button type="button" onclick="addImageInputsFields()" class="add-button">Adicionar imagem</button>
 		<div id="image-fields-container">
 			
 		</div>
@@ -88,7 +172,7 @@
 			<label for="frontend-tasks">
 				<h2>Frontend</h2>
 			</label>
-			<button type="button" onclick="addTaskInputsFields('frontend')">Adicionar Tarefa</button>
+			<button type="button" onclick="addTaskInputsFields('frontend')" class="add-button">Adicionar tarefa</button>
 			<div id="frontend-tasks-fields-container">
 
 			</div>
@@ -97,13 +181,14 @@
 			<label for="backend-tasks">
 				<h2>Backend</h2>
 			</label>
-			<button type="button" onclick="addTaskInputsFields('backend')">Adicionar Tarefa</button>
+			<button type="button" onclick="addTaskInputsFields('backend')" class="add-button">Adicionar Tarefa</button>
 			<div id="backend-tasks-fields-container">
 
 			</div>
 		</div>
 	</div>
 	</div>
-	<button type="submit">Gerar README</button>
+	<button type="submit" class="submit-button">Gerar README</button>
 </form>
+</main>
 </body>
