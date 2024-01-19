@@ -32,17 +32,17 @@
 			let tasksFieldsContainerInnerHTML = tasksFieldsContainer.innerHTML
 			const i = document.querySelectorAll('[id*="task-description-"]').length
 			tasksFieldsContainerInnerHTML = tasksFieldsContainerInnerHTML + `
-				<div id="task-fields-container-${i + 1}">
+				<div id="${taskType}-task-fields-container-${i + 1}">
 					<input id="task-description-${i + 1}" type="text" placeholder="Descrição da tarefa">
 					<input id="task-assignment-${i + 1}" type="text" placeholder="Atribuição">
-					<button onclick="deleteTaskFieldsContainer(${i + 1})" type="button">Deletar</button>
+					<button onclick="deleteTaskFieldsContainer(${i + 1}, '${taskType}')" type="button">Deletar</button>
 				</div>
 			`
 			tasksFieldsContainer.innerHTML = tasksFieldsContainerInnerHTML
 		}
 
-		function deleteTaskFieldsContainer (taskFieldContainerId) {
-			document.querySelector(`#task-fields-container-${taskFieldContainerId}`).remove()
+		function deleteTaskFieldsContainer (taskFieldContainerId, taskType) {
+			document.querySelector(`#${taskType}-task-fields-container-${taskFieldContainerId}`).remove()
 		}
 	</script>
 </head>
@@ -97,6 +97,7 @@
 			<label for="backend-tasks">
 				<h2>Backend</h2>
 			</label>
+			<button type="button" onclick="addTaskInputsFields('backend')">Adicionar Tarefa</button>
 			<div id="backend-tasks-fields-container">
 
 			</div>
