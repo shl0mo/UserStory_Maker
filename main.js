@@ -42,7 +42,6 @@ const makeTasksTable = (tasksTableHeader, tasksLines) => {
 }
 
 app.post('/makeREADME', (req, res) => {
-	const userStoryId = req.body.userStoryId
 	const title = req.body.title
 	const userStory = req.body.userStory
 	const imageAlt = req.body.imageAlt

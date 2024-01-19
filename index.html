@@ -10,13 +10,17 @@
 			let imageFieldsContainerInnerHTML = imageFieldsContainer.innerHTML
 			const i = document.querySelectorAll('[id*="image-alt"]').length
 			imageFieldsContainerInnerHTML = imageFieldsContainerInnerHTML + `
-				<div>
+			       <div id="image-fields-container-${i + 1}">
 					<input id="image-alt-${i + 1}" type="text" name="imageAlt" placeholder="Descrição da imagem">
 					<input id="interface-model-image-src-${i + 1}" type="text" name="interfaceModelImageSrc" placeholder="src da imagem">
-					<button id="delete-image-button-${i + 1}" type="button">Deletar</button>
+				       <button onClick="deleteImageFieldsContainer(${i + 1})" type="button">Deletar</button>
 				</div>
 			`
 			imageFieldsContainer.innerHTML = imageFieldsContainerInnerHTML
+		}
+
+		function deleteImageFieldsContainer (imageContainerId) {
+			document.querySelector(`#image-fields-container-${imageContainerId}`).remove()
 		}
 
 		/*function addTaskInputsFields (taskType) {
@@ -41,12 +45,6 @@
 <body>
 <form action="http://localhost:5000/makeREADME" method="post">
 	<div>
-	<div>
-		<label for="user-story-id">
-			<h1>Id da História de Usuário</h1>
-		</label>
-		<input id="user-story-id" type="text" name="userStoryId" />
-	</div>
 	<div>
 		<label for="title">
 			<h1>Titulo</h1>
