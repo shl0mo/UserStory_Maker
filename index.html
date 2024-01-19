@@ -11,35 +11,39 @@
 			const i = document.querySelectorAll('[id*="image-alt"]').length
 			imageFieldsContainerInnerHTML = imageFieldsContainerInnerHTML + `
 			       <div id="image-fields-container-${i + 1}">
-					<input id="image-alt-${i + 1}" type="text" name="imageAlt" placeholder="Descrição da imagem">
-					<input id="interface-model-image-src-${i + 1}" type="text" name="interfaceModelImageSrc" placeholder="src da imagem">
-				       <button onClick="deleteImageFieldsContainer(${i + 1})" type="button">Deletar</button>
+					<input id="image-alt-${i + 1}" type="text" placeholder="Descrição da imagem">
+					<input id="interface-model-image-src-${i + 1}" type="text" placeholder="src da imagem">
+				    <button onclick="deleteImageFieldsContainer(${i + 1})" type="button">Deletar</button>
 				</div>
 			`
 			imageFieldsContainer.innerHTML = imageFieldsContainerInnerHTML
 		}
 
-		function deleteImageFieldsContainer (imageContainerId) {
-			document.querySelector(`#image-fields-container-${imageContainerId}`).remove()
+		function deleteImageFieldsContainer (imageFieldContainerId) {
+			document.querySelector(`#image-fields-container-${imageFieldContainerId}`).remove()
 		}
 
-		/*function addTaskInputsFields (taskType) {
+		function addTaskInputsFields (taskType) {
 			if (taskType !== 'backend' && taskType !== 'frontend') {
 				console.log('addTaskInputsFields(): Escolha um tipo de tarefa válido')
 				return
 			}
-			const taskFieldsContainer = document.querySelector(`#${taskType}-fields-container`)
-			let taskFieldsContainerInnerHTML = taskFieldsContainer.innerHTML
-			const i = document.querySelectorAll('[id*="image-alt"]').length
-			taskFieldsContainerInnerHTML = taskFieldsContainerInnerHTML + `
-				<div>
-					<input id="task-description-${i + 1}" type="text" name="imageAlt" placeholder="Descrição da imagem">
-					<input id="interface-model-image-src-${i + 1}" type="text" name="interfaceModelImageSrc" placeholder="src da imagem">
-					<button id="delete-image-button-${i + 1}" type="button">Deletar</button>
+			const tasksFieldsContainer = document.querySelector(`#${taskType}-tasks-fields-container`)
+			let tasksFieldsContainerInnerHTML = tasksFieldsContainer.innerHTML
+			const i = document.querySelectorAll('[id*="task-description-"]').length
+			tasksFieldsContainerInnerHTML = tasksFieldsContainerInnerHTML + `
+				<div id="task-fields-container-${i + 1}">
+					<input id="task-description-${i + 1}" type="text" placeholder="Descrição da tarefa">
+					<input id="task-assignment-${i + 1}" type="text" placeholder="Atribuição">
+					<button onclick="deleteTaskFieldsContainer(${i + 1})" type="button">Deletar</button>
 				</div>
 			`
-			taskFieldsContainer.innerHTML = taskFieldsContainerInnerHTML
-		}*/
+			tasksFieldsContainer.innerHTML = tasksFieldsContainerInnerHTML
+		}
+
+		function deleteTaskFieldsContainer (taskFieldContainerId) {
+			document.querySelector(`#task-fields-container-${taskFieldContainerId}`).remove()
+		}
 	</script>
 </head>
 <body>
@@ -84,13 +88,18 @@
 			<label for="frontend-tasks">
 				<h2>Frontend</h2>
 			</label>
-			<textarea id="frontend-tasks" name="frontendTasks"></textarea>
+			<button type="button" onclick="addTaskInputsFields('frontend')">Adicionar Tarefa</button>
+			<div id="frontend-tasks-fields-container">
+
+			</div>
 		</div>
 		<div>
 			<label for="backend-tasks">
 				<h2>Backend</h2>
 			</label>
-			<textarea id="backend-tasks" name="backendTasks"></textarea>
+			<div id="backend-tasks-fields-container">
+
+			</div>
 		</div>
 	</div>
 	</div>
