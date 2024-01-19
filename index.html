@@ -1,6 +1,10 @@
 <head>
 
 	<script>
+		function getStringBetween(char1, char2, from='') {
+			return from.split(char1)[1].split(char2)[0]
+		}
+
 		function addImageInputsFields () {
 			const imageFieldsContainer = document.querySelector('#image-fields-container')
 			let imageFieldsContainerInnerHTML = imageFieldsContainer.innerHTML
