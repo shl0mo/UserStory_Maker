@@ -25,13 +25,20 @@
 		input, button, textarea  {
 			margin-top: 10px;
 			border: 1px solid rgba(0,0,0,0.3);
+			font-family: sans-serif;
+			font-size: 16px;
+			border-radius: 5px;
 		}
 
 		textarea {
-			height: 100px;
-			width: 80%;
+			height: 120px;
+			width: 90%;
 			resize: none;
 			padding: 10px;
+		}
+
+		#interface-behavior {
+			height: 200px;
 		}
 
 		input {
@@ -46,9 +53,11 @@
 			flex-direction: column;
 			align-items: center;
 			background-color: white;
-			width: 30%;
+			width: 40%;
 			/*border-radius: 1rem;*/
 			padding: 50px;
+			border-radius: 5px;
+			box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
 		}
 
 		button {
@@ -74,6 +83,10 @@
 
 		.delete-button {
 			background-color: #B57474;
+		}
+
+		.mb-15 {
+			margin-bottom: 15px;
 		}
 
 		form {
@@ -151,13 +164,13 @@
 		<label for="title">
 			<h1>Título</h1>
 		</label>
-		<input id="title" type="text" name="title" placeholder="ex.: [US01]: Página Inicial"/>
+		<input id="title" type="text" name="title" placeholder="ex.: [US01]: Página Inicial" class="mb-15"/>
 	</div>
 	<div>
 		<label for="user-story">
 			<h1>História de Usuário</h1>
 		</label>
-		<textarea id="user-story" name="userStory" placeholder="Como [...], eu gostaria de [...] de modo que [...]."></textarea>
+		<textarea id="user-story" name="userStory" placeholder="Como [...], eu gostaria de [...] de modo que [...]." class="mb-15"></textarea>
 	</div>
 	<div>
 		<label>
@@ -172,13 +185,13 @@
 		<label for="interface-behavior">
 			<h1>Comportamento da Interface</h1>
 		</label>
-		<textarea id="interface-behavior" type="text" name="interfaceBehavior"></textarea>
+		<textarea id="interface-behavior" type="text" name="interfaceBehavior" clas="mb-15" class="mb-15"></textarea>
 	</div>
 	<div>
 		<label for="comments">
 			<h1>Observações</h1>
 		</label>
-		<input id="comments" type="text" name="comments" />
+		<input id="comments" type="text" name="comments" class="mb-15" />
 	</div>
 	<div>
 		<h1>Tarefas</h1>
