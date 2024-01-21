@@ -85,7 +85,7 @@ app.post('/makeREADME', (req, res) => {
 	const imageAlt = req.body.imageAlt
 	const interfaceModelImageSrc = req.body.interfaceModelImageSrc
 	const interfaceBehavior = req.body.interfaceBehavior
-	const observations = req.body.observations
+	const comments = req.body.comments
 	const frontendTasks = req.body.frontendTasks
 	const backendTasks = req.body.backendTasks
 	const tasksTableHeader = `
@@ -110,7 +110,7 @@ app.post('/makeREADME', (req, res) => {
 		## Comportamento da Interface
 		${interfaceBehavior}
 		### Observações
-		${observations}
+		${comments}
 		## Tarefas
 		### Frontend
 		${frontendTasksTable}

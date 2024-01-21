@@ -86,7 +86,17 @@
 				method: 'POST',
 			}).then((res) => {
 				return res.json().then((data) => {
-					console.log(data)
+					const userStoryId = data.userStoryId
+					const title = data.title
+					const userStory = data.userStory
+					const interfaceBehavior = data.interfaceBehavior
+					const titleField = document.querySelector('#title')
+					const userStoryField = document.querySelector('#user-story')
+					const interfaceBehaviorField = document.querySelector('#interface-behavior')
+					titleField.value = `[${userStoryId}]: ${title}`
+					userStoryField.value = userStory
+					interfaceBehaviorField.value = interfaceBehavior
+					console.log(interfaceBehavior)
 				})
 			})
 		}
@@ -151,7 +161,7 @@
 	</div>
 	<div>
 		<label>
-			<h1>Modelo(s) da(s) Interface(s)</h1>
+			<h1>Modelo(s) de Interface</h1>
 		</label>
 		<button type="button" onclick="addImageInputsFields()" class="add-button">Adicionar imagem</button>
 		<div id="image-fields-container">
@@ -165,10 +175,10 @@
 		<textarea id="interface-behavior" type="text" name="interfaceBehavior"></textarea>
 	</div>
 	<div>
-		<label for="observations">
+		<label for="comments">
 			<h1>Observações</h1>
 		</label>
-		<input id="observations" type="text" name="observations" />
+		<input id="comments" type="text" name="comments" />
 	</div>
 	<div>
 		<h1>Tarefas</h1>
