@@ -63,13 +63,13 @@ app.post('/getFieldsData', (req, res) => {
 		}
 		if (data.includes('Observações')) {
 			interfaceBehavior = getStringBetween('Comportamento da Interface\n', '\n\n### Observações', data)
+			comments = getStringBetween('### Observações\n\n', '\n\n## Tarefas', data)
 		} else {
 			interfaceBehavior = getStringBetween('Comportamento da Interface\n', '\n\n## Tarefas', data)
-			comments = getStringBetween('### Observações\n', '\n## Tarefas', data)
 		}
 		const frontendTasksTableTbody = getStringBetween('id="frontend-tasks-tbody">\n', '\n</tbody>', data)
 		const backendTasksTableTbody = getStringBetween('id="backend-tasks-tbody">\n', '\n</tbody>', data)
-		console.log(interfaceBehavior);
+		console.log(comments)
 		res.send({
 			userStoryId: userStoryId,
 			title: title,

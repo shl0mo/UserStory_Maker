@@ -103,13 +103,15 @@
 					const title = data.title
 					const userStory = data.userStory
 					const interfaceBehavior = data.interfaceBehavior
+					const comments = data.comments
 					const titleField = document.querySelector('#title')
 					const userStoryField = document.querySelector('#user-story')
 					const interfaceBehaviorField = document.querySelector('#interface-behavior')
+					const commentsField = document.querySelector('#comments')
 					titleField.value = `[${userStoryId}]: ${title}`
 					userStoryField.value = userStory
 					interfaceBehaviorField.value = interfaceBehavior
-					console.log(interfaceBehavior)
+					commentsField.value = comments
 				})
 			})
 		}
