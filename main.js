@@ -47,6 +47,25 @@ const getStringBetween = (char1, char2, text) => {
 	return text.split(char1)[1].split(char2)[0]
 }
 
+const getTaskTableData = (tasksTableTbody, tasksDataArray) => {
+	while (tasksTableTbody.includes('\t'))
+		tasksTableTbody = tasksTableTbody.replace('\t', '')
+	while (tasksTableTbody.includes('\n'))
+		tasksTableTbody = tasksTableTbody.replace('\n', '')
+	let i = 1
+	while (tasksTableTbody.includes('</td><td>')) {
+		const taskDescription = getStringBetween('</td><td>', '</td><td>', tasksTableTbody)
+		const taskAssignment = getStringBetween('<a href="https://github.com/', '">', tasksTableTbody)
+		tasksDataArray.push({
+			taskDescription: taskDescription,
+			taskAssignment: taskAssignment
+		})
+		tasksTableTbody = tasksTableTbody.replace(`</td><td>${taskDescription}</td><td>`, '')
+		tasksTableTbody = tasksTableTbody.replace(`<a href="https://github.com/${taskAssignment}">`, '')
+		i = i + 1
+	}
+}
+
 app.post('/getFieldsData', (req, res) => {
 	fs.readFile('README.md', 'utf-8', (error, data) => {
 		if (error) res.status(500).json(error)
@@ -56,6 +75,8 @@ app.post('/getFieldsData', (req, res) => {
 		let imageFieldsData = ''
 		let interfaceBehavior = ''
 		let comments = ''
+		const frontendTasksData = []
+		const backendTasksData = []
 		if (data.includes('Modelo da Interface de Usuário')) {
 			imageFieldsData = getStringBetween('Modelo da Interface de Usuário\n', '\n', data)
 		} else if (data.includes('Modelos das Interfaces de Usuário')) {
@@ -67,16 +88,20 @@ app.post('/getFieldsData', (req, res) => {
 		} else {
 			interfaceBehavior = getStringBetween('Comportamento da Interface\n', '\n\n## Tarefas', data)
 		}
-		const frontendTasksTableTbody = getStringBetween('id="frontend-tasks-tbody">\n', '\n</tbody>', data)
-		const backendTasksTableTbody = getStringBetween('id="backend-tasks-tbody">\n', '\n</tbody>', data)
+		let frontendTasksTableTbody = getStringBetween('id="frontend-tasks-tbody">\n', '\n</tbody>', data)
+		let backendTasksTableTbody = getStringBetween('id="backend-tasks-tbody">\n', '\n</tbody>', data)
+		getTaskTableData(frontendTasksTableTbody, frontendTasksData)
+		getTaskTableData(backendTasksTableTbody, backendTasksData)
+		console.log(backendTasksData)
+		console.log(frontendTasksData)
 		res.send({
 			userStoryId: userStoryId,
 			title: title,
 			userStory: userStory,
 			imageFieldsData: imageFieldsData,
 			interfaceBehavior: interfaceBehavior,
-			frontendTasksTableTbody: frontendTasksTableTbody,
-			backendTasksTableTbody: backendTasksTableTbody,
+			frontendTasksData: frontendTasksData,
+			backendTasksData: backendTasksData,
 			comments: comments
 		})
 	})
