@@ -54,19 +54,22 @@ app.post('/getFieldsData', (req, res) => {
 		const title = getStringBetween(']: ', '\n', data)
 		const userStory = getStringBetween('História de Usuário\n', '\n', data)
 		let imageFieldsData = ''
+		let interfaceBehavior = ''
+		let comments = ''
 		if (data.includes('Modelo da Interface de Usuário')) {
 			imageFieldsData = getStringBetween('Modelo da Interface de Usuário\n', '\n', data)
 		} else if (data.includes('Modelos das Interfaces de Usuário')) {
 			imageFieldsData = getStringBetween('Modelos das Interfaces de Usuário', '\n', data)
 		}
-		let interfaceBehavior = ''
 		if (data.includes('Observações')) {
 			interfaceBehavior = getStringBetween('Comportamento da Interface\n', '\n\n### Observações', data)
 		} else {
 			interfaceBehavior = getStringBetween('Comportamento da Interface\n', '\n\n## Tarefas', data)
+			comments = getStringBetween('### Observações\n', '\n## Tarefas', data)
 		}
 		const frontendTasksTableTbody = getStringBetween('id="frontend-tasks-tbody">\n', '\n</tbody>', data)
 		const backendTasksTableTbody = getStringBetween('id="backend-tasks-tbody">\n', '\n</tbody>', data)
+		console.log(interfaceBehavior);
 		res.send({
 			userStoryId: userStoryId,
 			title: title,
@@ -74,7 +77,8 @@ app.post('/getFieldsData', (req, res) => {
 			imageFieldsData: imageFieldsData,
 			interfaceBehavior: interfaceBehavior,
 			frontendTasksTableTbody: frontendTasksTableTbody,
-			backendTasksTableTbody: backendTasksTableTbody
+			backendTasksTableTbody: backendTasksTableTbody,
+			comments: comments
 		})
 	})
 })
