@@ -22,9 +22,10 @@
 			margin-top: 10px;
 		}
 
-		input, button, textarea  {
+		input, button, textarea, select  {
 			margin-top: 10px;
 			border: 1px solid rgba(0,0,0,0.3);
+			background-color: white;
 			font-family: sans-serif;
 			font-size: 16px;
 			border-radius: 5px;
@@ -41,7 +42,7 @@
 			height: 200px;
 		}
 
-		input {
+		input, select {
 			padding: 10px;
 			font-size: 14px;
 		}
@@ -145,7 +146,15 @@
 			tasksFieldsContainerInnerHTML = tasksFieldsContainerInnerHTML + `
 				<div id="${taskType}-task-fields-container-${i + 1}">
 					<input id="task-description-${i + 1}" type="text" placeholder="Descrição da tarefa">
-					<input id="task-assignment-${i + 1}" type="text" placeholder="Atribuição">
+					<select id="task-assignment-${i + 1}" type="text" placeholder="Atribuição" required>
+						<option value="">-- Atribuição --</option>
+						<option value="cleogarcia">cleogarcia</option>
+						<option value="diunkz">diunkz</option>
+						<option value="gaspar51">gaspar51</option>
+						<option value="icarosun">icarosun</option>
+						<option value="LGugs">LGugs</option>
+						<option value="shl0mo">shl0mo</option>
+					</select>
 					<button onclick="deleteTaskFieldsContainer(${i + 1}, '${taskType}')" type="button" class="delete-button">Excluir</button>
 				</div>
 			`

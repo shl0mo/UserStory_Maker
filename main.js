@@ -69,7 +69,6 @@ app.post('/getFieldsData', (req, res) => {
 		}
 		const frontendTasksTableTbody = getStringBetween('id="frontend-tasks-tbody">\n', '\n</tbody>', data)
 		const backendTasksTableTbody = getStringBetween('id="backend-tasks-tbody">\n', '\n</tbody>', data)
-		console.log(comments)
 		res.send({
 			userStoryId: userStoryId,
 			title: title,
