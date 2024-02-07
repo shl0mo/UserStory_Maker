@@ -105,6 +105,8 @@
 					const userStory = data.userStory
 					const interfaceBehavior = data.interfaceBehavior
 					const comments = data.comments
+					const frontendTasksData = data.frontendTasksData
+					const backendTasksData = data.backendTasksData
 					const titleField = document.querySelector('#title')
 					const userStoryField = document.querySelector('#user-story')
 					const interfaceBehaviorField = document.querySelector('#interface-behavior')
@@ -113,6 +115,12 @@
 					userStoryField.value = userStory
 					interfaceBehaviorField.value = interfaceBehavior
 					commentsField.value = comments
+					for (frontendTaskData of frontendTasksData) {
+						addTaskInputsFields ('frontend', tasksData=frontendTaskData)
+					}
+					for (backendTaskData of backendTasksData) {
+						addTaskInputsFields ('backend', tasksData=backendTaskData)
+					}
 					console.log(data)
 				})
 			})
@@ -136,25 +144,47 @@
 			document.querySelector(`#image-fields-container-${imageFieldContainerId}`).remove()
 		}
 
-		function addTaskInputsFields (taskType) {
+		function addTaskInputsFields (taskType, tasksData={}) {
 			if (taskType !== 'backend' && taskType !== 'frontend') {
 				console.log('addTaskInputsFields(): Escolha um tipo de tarefa válido')
 				return
 			}
+			let taskDescriptionValue = ''
+			let taskAssignmentValue = ''
+			const devSelectedArray = [
+				'-- Atribuição --',
+				'cleogarcia',
+				'diunkz',
+				'gaspar51',
+				'icarosun',
+				'LGugs',
+				'shl0mo'
+			]
 			const tasksFieldsContainer = document.querySelector(`#${taskType}-tasks-fields-container`)
 			let tasksFieldsContainerInnerHTML = tasksFieldsContainer.innerHTML
 			const i = document.querySelectorAll('[id*="task-description-"]').length
+			if (JSON.stringify(tasksData) !== "{}") {
+				taskDescriptionValue = `value="${tasksData.taskDescription}`
+				console.log(tasksData.taskAssignment)
+				for (let i = 0; i < devSelectedArray.length; i++) {
+					if (devSelectedArray[i] === tasksData.taskAssignment)
+						devSelectedArray[i] = 'selected'
+					else
+						devSelectedArray[i] = ''
+				}
+			}
+			console.log(devSelectedArray)
 			tasksFieldsContainerInnerHTML = tasksFieldsContainerInnerHTML + `
 				<div id="${taskType}-task-fields-container-${i + 1}">
-					<input id="task-description-${i + 1}" type="text" placeholder="Descrição da tarefa">
-					<select id="task-assignment-${i + 1}" type="text" placeholder="Atribuição" required>
-						<option value="">-- Atribuição --</option>
-						<option value="cleogarcia">cleogarcia</option>
-						<option value="diunkz">diunkz</option>
-						<option value="gaspar51">gaspar51</option>
-						<option value="icarosun">icarosun</option>
-						<option value="LGugs">LGugs</option>
-						<option value="shl0mo">shl0mo</option>
+					<input id="task-description-${i + 1}" type="text" ${taskDescriptionValue}"" placeholder="Descrição da tarefa">
+					<select id="task-assignment-${i + 1}" placeholder="Atribuição" required>
+						<option value="" ${devSelectedArray[0]}>-- Atribuição --</option>
+						<option value="cleogarcia" ${devSelectedArray[1]}>cleogarcia</option>
+						<option value="diunkz" ${devSelectedArray[2]}>diunkz</option>
+						<option value="gaspar51" ${devSelectedArray[3]}>gaspar51</option>
+						<option value="icarosun" ${devSelectedArray[4]}>icarosun</option>
+						<option value="LGugs" ${devSelectedArray[5]}>LGugs</option>
+						<option value="shl0mo" ${devSelectedArray[6]}>shl0mo</option>
 					</select>
 					<button onclick="deleteTaskFieldsContainer(${i + 1}, '${taskType}')" type="button" class="delete-button">Excluir</button>
 				</div>
@@ -188,10 +218,10 @@
 		<label>
 			<h1>Modelo(s) de Interface</h1>
 		</label>
-		<button type="button" onclick="addImageInputsFields()" class="add-button">Adicionar imagem</button>
 		<div id="image-fields-container">
 			
 		</div>
+		<button type="button" onclick="addImageInputsFields()" class="add-button">Adicionar imagem</button>
 	</div>
 	<div>
 		<label for="interface-behavior">
@@ -211,19 +241,19 @@
 			<label for="frontend-tasks">
 				<h2>Frontend</h2>
 			</label>
-			<button type="button" onclick="addTaskInputsFields('frontend')" class="add-button">Adicionar tarefa</button>
 			<div id="frontend-tasks-fields-container">
 
 			</div>
+			<button type="button" onclick="addTaskInputsFields('frontend')" class="add-button mb-15">Adicionar tarefa</button>
 		</div>
 		<div>
 			<label for="backend-tasks">
 				<h2>Backend</h2>
 			</label>
-			<button type="button" onclick="addTaskInputsFields('backend')" class="add-button">Adicionar Tarefa</button>
 			<div id="backend-tasks-fields-container">
 
 			</div>
+			<button type="button" onclick="addTaskInputsFields('backend')" class="add-button">Adicionar Tarefa</button>
 		</div>
 	</div>
 	</div>
