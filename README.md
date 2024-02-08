@@ -6,6 +6,7 @@ Como usuário, eu gostaria de ter uma interface amigável para visualizar os eve
 
 ## Modelo da Interface de Usuário
 ![initial page](./frontend/layouts/01-paginaInicial.png)
+![anotherpage](./frontend/layouts/02-anotherPage.png)
 
 
 

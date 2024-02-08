@@ -2,7 +2,7 @@
 	<title>User Story README Maker</title>
 	<style>
 		:root {
-			--main-color: #570987;
+			--main-color: #41658A;
 		}
 		
 		* {
@@ -103,12 +103,16 @@
 					const userStoryId = data.userStoryId
 					const title = data.title
 					const userStory = data.userStory
+					const imageFieldsData = data.imageFieldsData.split('|')
 					const interfaceBehavior = data.interfaceBehavior
 					const comments = data.comments
 					const frontendTasksData = data.frontendTasksData
 					const backendTasksData = data.backendTasksData
 					const titleField = document.querySelector('#title')
 					const userStoryField = document.querySelector('#user-story')
+					for (imageFieldData of imageFieldsData) {
+						addImageInputsFields(imageFieldData)
+					}
 					const interfaceBehaviorField = document.querySelector('#interface-behavior')
 					const commentsField = document.querySelector('#comments')
 					titleField.value = `[${userStoryId}]: ${title}`
@@ -121,19 +125,28 @@
 					for (backendTaskData of backendTasksData) {
 						addTaskInputsFields ('backend', tasksData=backendTaskData)
 					}
-					console.log(data)
 				})
 			})
 		}
 
-		function addImageInputsFields () {
+		function getStringBetween (char1, char2, text) {
+			return text.split(char1)[1].split(char2)[0]
+		}
+
+		function addImageInputsFields (imageFieldData=undefined) {
+			let imageDescriptionValue = ''
+			let imageSrcValue = ''
+			if (imageFieldData) {
+				imageDescriptionValue = `value=${getStringBetween('![', ']', imageFieldData)}`
+				imageSrcValue = `value=${getStringBetween('](', ')', imageFieldData)}`
+			}
 			const imageFieldsContainer = document.querySelector('#image-fields-container')
 			let imageFieldsContainerInnerHTML = imageFieldsContainer.innerHTML
 			const i = document.querySelectorAll('[id*="image-alt"]').length
 			imageFieldsContainerInnerHTML = imageFieldsContainerInnerHTML + `
 			       <div id="image-fields-container-${i + 1}">
-					<input id="image-alt-${i + 1}" type="text" placeholder="Descrição da imagem">
-					<input id="interface-model-image-src-${i + 1}" type="text" placeholder="src da imagem">
+					<input id="image-alt-${i + 1}" type="text" ${imageDescriptionValue} placeholder="Descrição da imagem">
+					<input id="interface-model-image-src-${i + 1}" type="text" ${imageSrcValue} placeholder="src da imagem">
 				    <button onclick="deleteImageFieldsContainer(${i + 1})" type="button" class="delete-button">Excluir</button>
 				</div>
 			`
@@ -165,7 +178,6 @@
 			const i = document.querySelectorAll('[id*="task-description-"]').length
 			if (JSON.stringify(tasksData) !== "{}") {
 				taskDescriptionValue = `value="${tasksData.taskDescription}`
-				console.log(tasksData.taskAssignment)
 				for (let i = 0; i < devSelectedArray.length; i++) {
 					if (devSelectedArray[i] === tasksData.taskAssignment)
 						devSelectedArray[i] = 'selected'
@@ -173,7 +185,6 @@
 						devSelectedArray[i] = ''
 				}
 			}
-			console.log(devSelectedArray)
 			tasksFieldsContainerInnerHTML = tasksFieldsContainerInnerHTML + `
 				<div id="${taskType}-task-fields-container-${i + 1}">
 					<input id="task-description-${i + 1}" type="text" ${taskDescriptionValue}"" placeholder="Descrição da tarefa">
