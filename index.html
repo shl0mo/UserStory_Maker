@@ -137,8 +137,8 @@
 			let imageDescriptionValue = ''
 			let imageSrcValue = ''
 			if (imageFieldData) {
-				imageDescriptionValue = `value=${getStringBetween('![', ']', imageFieldData)}`
-				imageSrcValue = `value=${getStringBetween('](', ')', imageFieldData)}`
+				imageDescriptionValue = `value="${getStringBetween('![', ']', imageFieldData)}"`
+				imageSrcValue = `value="${getStringBetween('](', ')', imageFieldData)}"`
 			}
 			const imageFieldsContainer = document.querySelector('#image-fields-container')
 			let imageFieldsContainerInnerHTML = imageFieldsContainer.innerHTML
@@ -206,6 +206,20 @@
 		function deleteTaskFieldsContainer (taskFieldContainerId, taskType) {
 			document.querySelector(`#${taskType}-task-fields-container-${taskFieldContainerId}`).remove()
 		}
+
+		function makeREADME () {
+			/*const title = document.querySelector('#title').value
+			const userStory = document.querySelector('#user-story').value
+			const imageFieldsDataArray = 
+			const body = {
+
+			}*/
+			fetch('http://localhost:5000/makeREADME', {
+				method: 'POST',
+			}).then((res) => {
+				
+			})
+		}
 	</script>
 </head>
 <body onload="getFieldsData()">
@@ -268,7 +282,7 @@
 		</div>
 	</div>
 	</div>
-	<button type="submit" class="submit-button">Gerar README</button>
+	<button type="button" class="submit-button" onclick="makeREADME()">Gerar README</button>
 </form>
 </main>
 </body>
