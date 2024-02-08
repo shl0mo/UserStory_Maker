@@ -8,8 +8,6 @@ Como usuário, eu gostaria de ter uma interface amigável para visualizar os eve
 ![initial page](./frontend/layouts/01-paginaInicial.png)
 ![anotherpage](./frontend/layouts/02-anotherPage.png)
 
-
-
 ## Comportamento da Interface
 - Ao preencher o input de busca de eventos e clicar no botão com o ícone da lupa, o usuário é redirecionado para uma página na qual são listados todos os eventos que correspondem à busca realizada
 - Ao clicar em um de boxes de filtragem por eventos, o usuário deve ser redirecionado para uma página onde serão listados todos os eventos correspondentes à categoria exibida no box clicado

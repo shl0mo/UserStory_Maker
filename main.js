@@ -72,16 +72,20 @@ app.post('/getFieldsData', (req, res) => {
 		const userStoryId = getStringBetween('[', ']', data)
 		const title = getStringBetween(']: ', '\n', data)
 		const userStory = getStringBetween('História de Usuário\n', '\n', data)
-		let imageFieldsData = ''
+		let imageFieldsString = ''
+		let imageFieldsDataArray = []
 		let interfaceBehavior = ''
 		let comments = ''
 		const frontendTasksData = []
 		const backendTasksData = []
 		if (data.includes('Modelo da Interface de Usuário')) {
-			imageFieldsData = getStringBetween('Modelo da Interface de Usuário\n', '\n', data)
+			imageFieldsString = getStringBetween('Modelo da Interface de Usuário\n', '\n\n## Comportamento da Interface', data)
+			imageFieldsDataArray = imageFieldsString.split('\n')
 		} else if (data.includes('Modelos das Interfaces de Usuário')) {
-			imageFieldsData = getStringBetween('Modelos das Interfaces de Usuário', '\n', data)
+			imageFieldsString = getStringBetween('Modelos das Interfaces de Usuário', '\n\n## Comportamento da Interface', data)
+			imageFieldsDataArray = imageFieldsString.split('\n')
 		}
+		console.log(imageFieldsDataArray)
 		if (data.includes('Observações')) {
 			interfaceBehavior = getStringBetween('Comportamento da Interface\n', '\n\n### Observações', data)
 			comments = getStringBetween('### Observações\n\n', '\n\n## Tarefas', data)
@@ -92,13 +96,11 @@ app.post('/getFieldsData', (req, res) => {
 		let backendTasksTableTbody = getStringBetween('id="backend-tasks-tbody">\n', '\n</tbody>', data)
 		getTaskTableData(frontendTasksTableTbody, frontendTasksData)
 		getTaskTableData(backendTasksTableTbody, backendTasksData)
-		console.log(backendTasksData)
-		console.log(frontendTasksData)
 		res.send({
 			userStoryId: userStoryId,
 			title: title,
 			userStory: userStory,
-			imageFieldsData: imageFieldsData,
+			imageFieldsDataArray: imageFieldsDataArray,
 			interfaceBehavior: interfaceBehavior,
 			frontendTasksData: frontendTasksData,
 			backendTasksData: backendTasksData,
