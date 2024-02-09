@@ -1,6 +1,6 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import fs from 'fs'
+import fs, { read } from 'fs'
 import cors from 'cors'
 
 const PORT = 5000
@@ -14,33 +14,34 @@ app.use(bodyParser.urlencoded({
 app.use(cors())
 
 
-const makeTasksTable = (tasksTableHeader, tasksLines) => {
-	let tasksTable = tasksTableHeader
-	for (const taskLine of tasksLines) {
-		const word = taskLine.split(' ')
-		const taskID = word[0]
-		const taskDescription = word[1]
-		const taskAssignment = word[2]
-		if (taskID === '') continue
-		tasksTable = tasksTable + `
+const makeTasksTable = (userStoryId, readmeString, tasksArray, taskType) => {
+	let taskTypePrefix = ''
+	if (taskType == 'frontend') taskTypePrefix = 'FT'
+	else taskTypePrefix = 'BT'
+	for (let i = 0; i < tasksArray.length; i++) {
+		const taskDescription = tasksArray[i].taskDescription
+		const taskAssignment = tasksArray[i].taskAssignment
+		let indexStr = String(i + 1)
+		if (indexStr.length == 1) indexStr = `0${indexStr}`
+		readmeString = readmeString + `
 			<tr>
 				<td>
-					${taskID}
+					${userStoryId}-${taskTypePrefix}${indexStr}
 				</td>
 				<td>
 					${taskDescription}
 				</td>
 				<td>
-					${taskAssignment}
+					<a href="https://github.com/${taskAssignment}">${taskAssignment}</a>
 				</td>
 			</tr>
 		`
 	}
-	tasksTable = tasksTable + `
-			</tbody>
+	readmeString = readmeString + `
+		</tbody>
 		</table>
 	`
-	return tasksTable
+	return readmeString
 }
 
 const getStringBetween = (char1, char2, text) => {
@@ -68,27 +69,27 @@ const getTaskTableData = (tasksTableTbody, tasksDataArray) => {
 
 app.post('/getFieldsData', (req, res) => {
 	fs.readFile('README.md', 'utf-8', (error, data) => {
-		if (error) res.status(500).json(error)
+		if (error) return res.status(500).json(error)
 		const userStoryId = getStringBetween('[', ']', data)
 		const title = getStringBetween(']: ', '\n', data)
-		const userStory = getStringBetween('História de Usuário\n', '\n', data)
+		const userStory = getStringBetween('História do Usuário\n', '\n', data)
 		let imageFieldsString = ''
 		let imageFieldsDataArray = []
 		let interfaceBehavior = ''
 		let comments = ''
 		const frontendTasksData = []
 		const backendTasksData = []
-		if (data.includes('Modelo da Interface de Usuário')) {
+		if (data.includes('Modelo da Interface do Usuário')) {
 			imageFieldsString = getStringBetween('Modelo da Interface de Usuário\n', '\n\n## Comportamento da Interface', data)
-			imageFieldsDataArray = imageFieldsString.split('\n')
-		} else if (data.includes('Modelos das Interfaces de Usuário')) {
-			imageFieldsString = getStringBetween('Modelos das Interfaces de Usuário', '\n\n## Comportamento da Interface', data)
-			imageFieldsDataArray = imageFieldsString.split('\n')
+		} else if (data.includes('Modelos das Interfaces do Usuário')) {
+			imageFieldsString = getStringBetween('Modelos das Interfaces do Usuário', '\n\n## Comportamento da Interface', data)
 		}
-		console.log(imageFieldsDataArray)
+		imageFieldsString.split('\n').map((imageFieldData) => {
+			if (imageFieldData !== '') imageFieldsDataArray.push(imageFieldData)
+		})
 		if (data.includes('Observações')) {
 			interfaceBehavior = getStringBetween('Comportamento da Interface\n', '\n\n### Observações', data)
-			comments = getStringBetween('### Observações\n\n', '\n\n## Tarefas', data)
+			comments = getStringBetween('### Observações\n', '\n\n## Tarefas', data)
 		} else {
 			interfaceBehavior = getStringBetween('Comportamento da Interface\n', '\n\n## Tarefas', data)
 		}
@@ -96,7 +97,7 @@ app.post('/getFieldsData', (req, res) => {
 		let backendTasksTableTbody = getStringBetween('id="backend-tasks-tbody">\n', '\n</tbody>', data)
 		getTaskTableData(frontendTasksTableTbody, frontendTasksData)
 		getTaskTableData(backendTasksTableTbody, backendTasksData)
-		res.send({
+		return res.send({
 			userStoryId: userStoryId,
 			title: title,
 			userStory: userStory,
@@ -111,13 +112,13 @@ app.post('/getFieldsData', (req, res) => {
 
 app.post('/makeREADME', (req, res) => {
 	const title = req.body.title
+	const userStoryId = getStringBetween('[', ']', title)
 	const userStory = req.body.userStory
-	const imageAlt = req.body.imageAlt
-	const interfaceModelImageSrc = req.body.interfaceModelImageSrc
+	const imageFieldsDataArray = req.body.imageFieldsDataArray
 	const interfaceBehavior = req.body.interfaceBehavior
 	const comments = req.body.comments
-	const frontendTasks = req.body.frontendTasks
-	const backendTasks = req.body.backendTasks
+	const frontendTasksArray = req.body.frontendTasksArray
+	const backendTasksArray = req.body.backendTasksArray
 	const tasksTableHeader = `
 		<table>
 			<thead>
@@ -125,29 +126,52 @@ app.post('/makeREADME', (req, res) => {
 				<th>Descrição</th>
 				<th>Atribuição</th>
 			</thead>
-			<tbody>
 	`
-	const frontendTasksLines = frontendTasks.split('\n')
-	const backendTasksLines = backendTasks.split('\n')
-	const frontendTasksTable = makeTasksTable(tasksTableHeader, frontendTasksLines)
-	const backendTasksTable = makeTasksTable(tasksTableHeader, backendTasksLines)
-	let readmeString = `
-		# ${title}
+	let readmeString = `# ${title}
 		## História do Usuário
 		${userStory}
-		## Modelo da Interface do Usuário
-		[${imageAlt}](${interfaceModelImageSrc})
-		## Comportamento da Interface
-		${interfaceBehavior}
-		### Observações
-		${comments}
-		## Tarefas
-		### Frontend
-		${frontendTasksTable}
-		### Backend
-		${backendTasksTable}
 	`
+	if (imageFieldsDataArray.length == 1) {
+		readmeString = readmeString + `
+			## Modelo da Interface do Usuário
+		`
+	} else {
+		readmeString = readmeString + `
+			## Modelos das Interfaces do Usuário
+		`
+	}
+	for (let imageFieldDataArray of imageFieldsDataArray) {
+		const imageDescription = imageFieldDataArray.imageDescription
+		const imageSrc = imageFieldDataArray.imageSrc
+		readmeString = readmeString + `
+			![${imageDescription}](${imageSrc})
+		`
+	}
+	readmeString = readmeString + `
+		## Comportamento da Interface
+		[[interface-Behavior-Section]]
+	`
+	if (comments !== '') {
+		readmeString = readmeString + `
+			### Observações
+			${comments}
+		`
+	}
+	readmeString = readmeString + `
+		## Tarefas
+		## Frontend
+		${tasksTableHeader}
+		<tbody id="frontend-tasks-tbody">
+	`
+	readmeString = makeTasksTable(userStoryId, readmeString, frontendTasksArray, 'frontend')
+	readmeString = readmeString + `
+		### Backend
+		${tasksTableHeader}
+		<tbody id="backend-tasks-tbody">
+	`
+	readmeString = makeTasksTable(userStoryId, readmeString, backendTasksArray, 'backend')
 	while (readmeString.includes('	')) readmeString = readmeString.replace('	', '')
+	readmeString = readmeString.replace('[[interface-Behavior-Section]]', interfaceBehavior)
 	fs.writeFile('README.md', readmeString, (err) => {
 		if (err) return res.status(500).json({ msg: "Erro ao tentar gerar README" })
 		return res.status(200).json({ msg: "README gerado com sucesso" })

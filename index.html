@@ -90,6 +90,14 @@
 			margin-bottom: 15px;
 		}
 
+		.mb-20 {
+			margin-bottom: 20px;
+		}
+
+		.width-60 {
+			width: 60%;
+		}
+
 		form {
 			text-align: center;
 		}
@@ -126,6 +134,8 @@
 						addTaskInputsFields ('backend', tasksData=backendTaskData)
 					}
 				})
+			}).catch((error) => {
+				console.log('O arquivo README.md não existe no diretório')
 			})
 		}
 
@@ -151,6 +161,12 @@
 				</div>
 			`
 			imageFieldsContainer.innerHTML = imageFieldsContainerInnerHTML
+			const imageDescriptionFields = document.querySelectorAll('[placeholder="Descrição da imagem"]')
+			/*if (imageDescriptionFields.length > 1) {
+				for (imageDescriptionFields of imageDescriptionFields) {
+					imageDescriptionFields.addEventListener('')
+				}
+			}*/
 		}
 
 		function deleteImageFieldsContainer (imageFieldContainerId) {
@@ -187,8 +203,8 @@
 			}
 			tasksFieldsContainerInnerHTML = tasksFieldsContainerInnerHTML + `
 				<div id="${taskType}-task-fields-container-${i + 1}">
-					<input id="task-description-${i + 1}" type="text" ${taskDescriptionValue}"" placeholder="Descrição da tarefa">
-					<select id="task-assignment-${i + 1}" placeholder="Atribuição" required>
+					<input id="${taskType}-task-description-${i + 1}" type="text" class="width-60" ${taskDescriptionValue}"" placeholder="Descrição da tarefa">
+					<select id="${taskType}-task-assignment-${i + 1}" placeholder="Atribuição" required>
 						<option value="" ${devSelectedArray[0]}>-- Atribuição --</option>
 						<option value="cleogarcia" ${devSelectedArray[1]}>cleogarcia</option>
 						<option value="diunkz" ${devSelectedArray[2]}>diunkz</option>
@@ -207,17 +223,62 @@
 			document.querySelector(`#${taskType}-task-fields-container-${taskFieldContainerId}`).remove()
 		}
 
-		function makeREADME () {
-			/*const title = document.querySelector('#title').value
-			const userStory = document.querySelector('#user-story').value
-			const imageFieldsDataArray = 
-			const body = {
+		function populateTasksArray (tasksArray, tasksDescriptionsInputs, tasksAssignmentsSelects) {
+			for (let i = 0; i < tasksDescriptionsInputs.length; i++) {
+				const taskDescription = tasksDescriptionsInputs[i].value
+				const taskAssignment = tasksAssignmentsSelects[i].value
+				tasksArray.push({
+					taskDescription: taskDescription,
+					taskAssignment: taskAssignment
+				})
+			}
+		}
 
-			}*/
+		function makeREADME () {
+			const title = document.querySelector('#title').value
+			const userStory = document.querySelector('#user-story').value
+			const imageFieldsDataArray = []
+			const imageDescriptionInputs = document.querySelectorAll('[id*=image-alt-]')
+			const imageImageSrcInputs = document.querySelectorAll('[id*=interface-model-image-src-]')
+			for (let i = 0; i < imageDescriptionInputs.length; i++) {
+				const imageDescription = imageDescriptionInputs[i].value
+				const imageSrc = imageImageSrcInputs[i].value
+				imageFieldsDataArray.push({
+					imageDescription: imageDescription,
+					imageSrc: imageSrc
+				})
+			}
+			const interfaceBehavior = document.querySelector('#interface-behavior').value
+			const comments = document.querySelector('#comments').value
+			const frontendTasksArray = []
+			const backendTasksArray = []
+			const frontendTasksDescriptionInputs = document.querySelectorAll('[id*=frontend-task-description-]')
+			const frontendTasksAssignmentSelects = document.querySelectorAll('[id*=frontend-task-assignment-]')
+			const backendTasksDescriptionInputs = document.querySelectorAll('[id*=backend-task-description-]')
+			const backendTasksAssignmentSelects = document.querySelectorAll('[id*=backend-task-assignment-]')
+			populateTasksArray(frontendTasksArray, frontendTasksDescriptionInputs, frontendTasksAssignmentSelects)
+			populateTasksArray(backendTasksArray, backendTasksDescriptionInputs, backendTasksAssignmentSelects)
+			const body = JSON.stringify({
+				title: title,
+				userStory: userStory,
+				imageFieldsDataArray: imageFieldsDataArray,
+				interfaceBehavior: interfaceBehavior,
+				comments: comments,
+				frontendTasksArray: frontendTasksArray,
+				backendTasksArray: backendTasksArray
+			})
 			fetch('http://localhost:5000/makeREADME', {
 				method: 'POST',
+				headers: {
+        			"Content-Type": "application/json",
+      			},
+				body: body
 			}).then((res) => {
-				
+				if (res.status == 200) {
+					alert('README criado com sucesso')
+				} else {
+					alert('Erro ao tentar gerar o README')
+				}
 			})
 		}
 	</script>
@@ -231,7 +292,7 @@
 		<label for="title">
 			<h1>Título</h1>
 		</label>
-		<input id="title" type="text" name="title" placeholder="ex.: [US01]: Página Inicial" class="mb-15"/>
+		<input id="title" type="text" name="title" placeholder="ex.: [US01]: Página Inicial" class="mb-15 width-60"/>
 	</div>
 	<div>
 		<label for="user-story">
@@ -239,7 +300,7 @@
 		</label>
 		<textarea id="user-story" name="userStory" placeholder="Como [...], eu gostaria de [...] de modo que [...]." class="mb-15"></textarea>
 	</div>
-	<div>
+	<div class="mb-20">
 		<label>
 			<h1>Modelo(s) de Interface</h1>
 		</label>
