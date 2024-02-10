@@ -1,4 +1,4 @@
-# [US-02]: Página de Detalhes de um Evento
+# [US02]: Página de Detalhes de um Evento
 ## História do Usuário
 Como comprador, eu gostaria de visualizar os detalhes de um evento cadastrado no site e ter a possibilidade de adicionar um determinado número de ingressos para este evento no carrinho ou poder ser redirecionado para a página de pagamento a fim de pagar por eles e adiquri-los.
 
@@ -25,7 +25,7 @@ Como comprador, eu gostaria de visualizar os detalhes de um evento cadastrado no
 
 <tr>
 <td>
-US-02-FT01
+US02-FT01
 </td>
 <td>
 Implementar a página de detalhes do evento
@@ -37,7 +37,7 @@ Implementar a página de detalhes do evento
 
 <tr>
 <td>
-US-02-FT02
+US02-FT02
 </td>
 <td>
 Implementar os testes unitários para página de detalhes do evento
@@ -63,7 +63,7 @@ Implementar os testes unitários para página de detalhes do evento
 
 <tr>
 <td>
-US-02-BT01
+US02-BT01
 </td>
 <td>
 Implementar o endpoint para a exibição dos detalhes do evento
@@ -75,7 +75,7 @@ Implementar o endpoint para a exibição dos detalhes do evento
 
 <tr>
 <td>
-US-02-BT02
+US02-BT02
 </td>
 <td>
 Implementar os testes unitários para o endpoint de exibição dos detalhes do evento

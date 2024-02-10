@@ -131,7 +131,6 @@ app.post('/makeREADME', (req, res) => {
 		## História do Usuário
 		${userStory}
 	`
-	// if () 
 	if (imageFieldsDataArray.length == 1) {
 		readmeString = readmeString + `
 			## Modelo da Interface do Usuário
