@@ -54,6 +54,30 @@ qwsddqweqwe
 </td>
 </tr>
 
+<tr>
+<td>
+adasd-FT03
+</td>
+<td>
+adsd
+</td>
+<td>
+<a href="https://github.com/gaspar51">gaspar51</a>
+</td>
+</tr>
+
+<tr>
+<td>
+adasd-FT04
+</td>
+<td>
+teste
+</td>
+<td>
+<a href="https://github.com/LGugs">LGugs</a>
+</td>
+</tr>
+
 </tbody>
 </table>
 
@@ -77,6 +101,18 @@ adfad
 </td>
 <td>
 <a href="https://github.com/LGugs">LGugs</a>
+</td>
+</tr>
+
+<tr>
+<td>
+adasd-BT02
+</td>
+<td>
+E
+</td>
+<td>
+<a href="https://github.com/shl0mo">shl0mo</a>
 </td>
 </tr>
 
