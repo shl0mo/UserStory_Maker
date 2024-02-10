@@ -192,10 +192,9 @@ function makeREADME () {
     const voidUserStoty = userStory === ''
     const voidImageFieldsDataArray = imageFieldsDataArray === ''
     const voidInterfaceBehavior = interfaceBehavior === ''
-    const voidComments = comments === ''
     const voidFrontendTasksArray = frontendTasksArray === ''
     const voidBackendTasksArray = backendTasksArray === ''
-    if (voidTitle | voidUserStoty | voidImageFieldsDataArray | voidInterfaceBehavior | voidComments | voidFrontendTasksArray | voidBackendTasksArray) {
+    if (voidTitle | voidUserStoty | voidImageFieldsDataArray | voidInterfaceBehavior | voidFrontendTasksArray | voidBackendTasksArray) {
         alert('Preencha todos os campos')
         return
     }
