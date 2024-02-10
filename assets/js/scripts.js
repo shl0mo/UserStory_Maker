@@ -167,6 +167,12 @@ function makeREADME () {
     for (let i = 0; i < imageDescriptionInputs.length; i++) {
         const imageDescription = imageDescriptionInputs[i].value
         const imageSrc = imageImageSrcInputs[i].value
+        const voidImageDescription = imageDescription === ''
+        const voidImageSrc = imageSrc === ''
+        if (voidImageDescription | voidImageSrc) {
+            alert('Preencha todos os campos')
+            return
+        }
         imageFieldsDataArray.push({
             imageDescription: imageDescription,
             imageSrc: imageSrc
@@ -182,6 +188,17 @@ function makeREADME () {
     const backendTasksAssignmentSelects = document.querySelectorAll('[id*=backend-task-assignment-]')
     populateTasksArray(frontendTasksArray, frontendTasksDescriptionInputs, frontendTasksAssignmentSelects)
     populateTasksArray(backendTasksArray, backendTasksDescriptionInputs, backendTasksAssignmentSelects)
+    const voidTitle = title === ''
+    const voidUserStoty = userStory === ''
+    const voidImageFieldsDataArray = imageFieldsDataArray === ''
+    const voidInterfaceBehavior = interfaceBehavior === ''
+    const voidComments = comments === ''
+    const voidFrontendTasksArray = frontendTasksArray === ''
+    const voidBackendTasksArray = backendTasksArray === ''
+    if (voidTitle | voidUserStoty | voidImageFieldsDataArray | voidInterfaceBehavior | voidComments | voidFrontendTasksArray | voidBackendTasksArray) {
+        alert('Preencha todos os campos')
+        return
+    }
     const body = JSON.stringify({
         title: title,
         userStory: userStory,
@@ -199,7 +216,7 @@ function makeREADME () {
         body: body
     }).then((res) => {
         if (res.status == 200) {
-            alert('README criado com sucesso')
+            alert('README gerado com sucesso')
         } else {
             alert('Erro ao tentar gerar o README')
         }

@@ -10,8 +10,6 @@ adsasdad
 
 ![asdas](qweqw)
 
-![]()
-
 ## Comportamento da Interface
 asdasd
 
