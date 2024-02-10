@@ -1,0 +1,100 @@
+:root {
+    --main-color: #41658A;
+}
+
+* {
+    margin: 0;
+}
+body {
+    font-family: sans-serif;
+    background-color: var(--main-color);
+}
+
+header {
+    height: 80px;
+    background-color: white;
+}
+
+h1, h2 {
+    margin-top: 10px;
+}
+
+input, button, textarea, select  {
+    margin-top: 10px;
+    border: 1px solid rgba(0,0,0,0.3);
+    background-color: white;
+    font-family: sans-serif;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+textarea {
+    height: 120px;
+    width: 90%;
+    resize: none;
+    padding: 10px;
+}
+
+#interface-behavior {
+    height: 200px;
+}
+
+input, select {
+    padding: 10px;
+    font-size: 14px;
+}
+
+main {
+    position: relative;
+    margin: 50px auto;
+    align-self: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    width: 40%;
+    /*border-radius: 1rem;*/
+    padding: 50px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+}
+
+button {
+    padding: 10px;
+    border-radius: 0.3rem;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.add-button {
+    background-color: var(--main-color);
+}
+
+.submit-button {
+    margin-top: 40px;
+    background-color: #70A37F;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 15px;
+}	
+
+.delete-button {
+    background-color: #B57474;
+}
+
+.mb-15 {
+    margin-bottom: 15px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.width-60 {
+    width: 60%;
+}
+
+form {
+    text-align: center;
+}

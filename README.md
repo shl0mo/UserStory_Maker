@@ -8,6 +8,10 @@ adsasdad
 
 ![12313](erwerwe)
 
+![asdas](qweqw)
+
+![]()
+
 ## Comportamento da Interface
 asdasd
 
@@ -35,6 +39,18 @@ asdasd
 </td>
 <td>
 <a href="https://github.com/gaspar51">gaspar51</a>
+</td>
+</tr>
+
+<tr>
+<td>
+adasd-FT02
+</td>
+<td>
+qwsddqweqwe
+</td>
+<td>
+<a href="https://github.com/diunkz">diunkz</a>
 </td>
 </tr>
 
