@@ -153,13 +153,13 @@ app.post('/makeREADME', (req, res) => {
 	`
 	if (comments !== '') {
 		readmeString = readmeString + `
-			### Observações
+			## Observações
 			${comments}
 		`
 	}
 	readmeString = readmeString + `
 		## Tarefas
-		## Frontend
+		### Frontend
 		${tasksTableHeader}
 		<tbody id="frontend-tasks-tbody">
 	`
