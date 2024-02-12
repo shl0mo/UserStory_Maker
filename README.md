@@ -1,18 +1,23 @@
-# [US02]: Página de Detalhes de um Evento
+# [US03]: Página de Gerenciamento de Eventos
 ## História do Usuário
-Como comprador, eu gostaria de visualizar os detalhes de um evento cadastrado no site e ter a possibilidade de adicionar um determinado número de ingressos para este evento no carrinho ou poder ser redirecionado para a página de pagamento a fim de pagar por eles e adiquri-los.
+Como organizador, eu gostaria de ter acesso a um dashboard onde eu possa cadastrar e gerenciar eventos, para que sejam disponibilizados ao público de acordo com as minhas especificações, de modo que as pessoas interessadas possam comprar ingressos para eles.
 
-## Modelo da Interface do Usuário
-
-![layout](./layouts/layout.png)
+## Modelos das Interfaces do Usuário
 
 ## Comportamento da Interface
-- Os botões de incremento e decremento no input de quantidade permitem ao comprador escolher o total de eventos que ele quer comprar, incrementando ou decrementando de uma em uma unidade. O total também pode ser definido diretamente editando o conteúdo do input, colocado o total de ingressos que se deseja
-- Ao clicar no botão "Adicionar ao Carrinho" um ingresso para o evento deve ser adicionado ao carrinho
-- Ao clicar em "Comprar" o usuário deve ser redirecionado para a página de pagamento
+[...]
+
+## Observações
+### Tarefas que precisam ser concluídas para que as tarefas da história do usuário possam ser implementadas:
+#### Tarefas do Frontend
+- Migrar a interface gráfica para Material UI - [gaspar51](https://github.com/gaspar51)
+- Desenvolver a versão 1.0 do modelo da interface do Organizador - [gaspar51](https://github.com/gaspar51)
+#### Tarefas do Backend
+- Atualizar o modelo de dados para a funcionalidade [F02-CE] - [LGugs](https://github.com/LGugs), [cleogarcia](https://github.com/cleogarcia), [shl0mo](https://github.com/shl0mo)
+- Ajustar backend para o modelo de dados da funcionalidade [F02-CE] - [shl0mo](https://github.com/shl0mo)
 
 ## Tarefas
-## Frontend
+### Frontend
 
 <table>
 <thead>
@@ -25,10 +30,10 @@ Como comprador, eu gostaria de visualizar os detalhes de um evento cadastrado no
 
 <tr>
 <td>
-US02-FT01
+US03-FT01
 </td>
 <td>
-Implementar a página de detalhes do evento
+Implementar a interface estática do dashboard do Organizador
 </td>
 <td>
 <a href="https://github.com/gaspar51">gaspar51</a>
@@ -37,13 +42,49 @@ Implementar a página de detalhes do evento
 
 <tr>
 <td>
-US02-FT02
+US03-FT02
 </td>
 <td>
-Implementar os testes unitários para página de detalhes do evento
+Implementar o componente de container de exibição de um evento cadastrado
 </td>
 <td>
-<a href="https://github.com/diunkz">diunkz</a>
+<a href="https://github.com/gaspar51">gaspar51</a>
+</td>
+</tr>
+
+<tr>
+<td>
+US03-FT03
+</td>
+<td>
+Implementar o modal de cadastro de um evento
+</td>
+<td>
+<a href="https://github.com/gaspar51">gaspar51</a>
+</td>
+</tr>
+
+<tr>
+<td>
+US03-FT04
+</td>
+<td>
+Implementar o modal de edição de um evento
+</td>
+<td>
+<a href="https://github.com/gaspar51">gaspar51</a>
+</td>
+</tr>
+
+<tr>
+<td>
+US03-FT05
+</td>
+<td>
+Desenvolver os testes unitários do frontend
+</td>
+<td>
+<a href="https://github.com/cleogarcia">cleogarcia</a>
 </td>
 </tr>
 
@@ -63,10 +104,22 @@ Implementar os testes unitários para página de detalhes do evento
 
 <tr>
 <td>
-US02-BT01
+US03-BT01
 </td>
 <td>
-Implementar o endpoint para a exibição dos detalhes do evento
+Implementar o CRUD para gerenciamento de eventos
+</td>
+<td>
+<a href="https://github.com/icarosun">icarosun</a>
+</td>
+</tr>
+
+<tr>
+<td>
+US03-BT02
+</td>
+<td>
+Implementar as restrições de acesso aos eventos
 </td>
 <td>
 <a href="https://github.com/shl0mo">shl0mo</a>
@@ -75,13 +128,13 @@ Implementar o endpoint para a exibição dos detalhes do evento
 
 <tr>
 <td>
-US02-BT02
+US03-BT03
 </td>
 <td>
-Implementar os testes unitários para o endpoint de exibição dos detalhes do evento
+Desenvolver os testes unitários do backend
 </td>
 <td>
-<a href="https://github.com/cleogarcia">cleogarcia</a>
+<a href="https://github.com/LGugs">LGugs</a>
 </td>
 </tr>
 

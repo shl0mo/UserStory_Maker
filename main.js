@@ -80,7 +80,7 @@ app.post('/getFieldsData', (req, res) => {
 		const frontendTasksData = []
 		const backendTasksData = []
 		if (data.includes('Modelo da Interface do Usuário')) {
-			imageFieldsString = getStringBetween('Modelo da Interface de Usuário\n', '\n\n## Comportamento da Interface', data)
+			imageFieldsString = getStringBetween('Modelo da Interface do Usuário\n', '\n\n## Comportamento da Interface', data)
 		} else if (data.includes('Modelos das Interfaces do Usuário')) {
 			imageFieldsString = getStringBetween('Modelos das Interfaces do Usuário', '\n\n## Comportamento da Interface', data)
 		}
