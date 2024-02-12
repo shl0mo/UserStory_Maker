@@ -23,7 +23,8 @@ const makeTasksTable = (userStoryId, readmeString, tasksArray, taskType) => {
 		const taskAssignment = tasksArray[i].taskAssignment
 		let indexStr = String(i + 1)
 		if (indexStr.length == 1) indexStr = `0${indexStr}`
-		readmeString = readmeString + `
+		if (userStoryId !== '') {
+			readmeString = readmeString + `
 			<tr>
 				<td>
 					${userStoryId}-${taskTypePrefix}${indexStr}
@@ -35,7 +36,19 @@ const makeTasksTable = (userStoryId, readmeString, tasksArray, taskType) => {
 					<a href="https://github.com/${taskAssignment}">${taskAssignment}</a>
 				</td>
 			</tr>
-		`
+			`
+		} else {
+			readmeString = readmeString + `
+			<tr>
+				<td>
+					${taskDescription}
+				</td>
+				<td>
+					<a href="https://github.com/${taskAssignment}">${taskAssignment}</a>
+				</td>
+			</tr>
+			`
+		}
 	}
 	readmeString = readmeString + `
 		</tbody>
@@ -88,8 +101,8 @@ app.post('/getFieldsData', (req, res) => {
 			if (imageFieldData !== '') imageFieldsDataArray.push(imageFieldData)
 		})
 		if (data.includes('Observações')) {
-			interfaceBehavior = getStringBetween('Comportamento da Interface\n', '\n\n### Observações', data)
-			comments = getStringBetween('### Observações\n', '\n\n## Tarefas', data)
+			interfaceBehavior = getStringBetween('Comportamento da Interface\n', '\n\n## Observações', data)
+			comments = getStringBetween('## Observações\n', '\n\n## Tarefas', data)
 		} else {
 			interfaceBehavior = getStringBetween('Comportamento da Interface\n', '\n\n## Tarefas', data)
 		}
@@ -112,50 +125,66 @@ app.post('/getFieldsData', (req, res) => {
 
 app.post('/makeREADME', (req, res) => {
 	const title = req.body.title
-	const userStoryId = getStringBetween('[', ']', title)
+	let userStoryId = getStringBetween('[', ']', title)
+	const idAtStart = title[0] === '['
+	if (!idAtStart) userStoryId = ''
 	const userStory = req.body.userStory
 	const imageFieldsDataArray = req.body.imageFieldsDataArray
 	const interfaceBehavior = req.body.interfaceBehavior
 	const comments = req.body.comments
 	const frontendTasksArray = req.body.frontendTasksArray
 	const backendTasksArray = req.body.backendTasksArray
-	const tasksTableHeader = `
+	let tasksTableHeader = ''
+	if (userStoryId !== '') {
+		tasksTableHeader = `
 		<table>
 			<thead>
 				<th>ID</th>
 				<th>Descrição</th>
 				<th>Atribuição</th>
 			</thead>
-	`
-	let readmeString = `# ${title}
-		## História do Usuário
-		${userStory}
-	`
-	if (imageFieldsDataArray.length == 1) {
-		readmeString = readmeString + `
-			## Modelo da Interface do Usuário
 		`
 	} else {
-		readmeString = readmeString + `
+		tasksTableHeader = `
+		<table>
+			<thead>
+				<th>Descrição</th>
+				<th>Atribuição</th>
+			</thead>
+		`
+	}
+	let readmeString = `# ${title}`
+	if (userStoryId !== '') {
+		readmeString = `
+		## História do Usuário
+		${userStory}
+		`
+		if (imageFieldsDataArray.length == 1) {
+			readmeString = readmeString + `
+			## Modelo da Interface do Usuário
+			`
+		} else {
+			readmeString = readmeString + `
 			## Modelos das Interfaces do Usuário
-		`
-	}
-	for (let imageFieldDataArray of imageFieldsDataArray) {
-		const imageDescription = imageFieldDataArray.imageDescription
-		const imageSrc = imageFieldDataArray.imageSrc
-		readmeString = readmeString + `
+			`
+		}
+		for (let imageFieldDataArray of imageFieldsDataArray) {
+			const imageDescription = imageFieldDataArray.imageDescription
+			const imageSrc = imageFieldDataArray.imageSrc
+			readmeString = readmeString + `
 			![${imageDescription}](${imageSrc})
-		`
-	}
-	readmeString = readmeString + `
+			`
+		}
+		readmeString = readmeString + `
 		## Comportamento da Interface
 		[[interface-Behavior-Section]]
-	`
-	if (comments !== '') {
-		readmeString = readmeString + `
+		`
+		if (comments !== '') {
+			readmeString = readmeString + `
 			## Observações
 			${comments}
-		`
+			`
+		}
 	}
 	readmeString = readmeString + `
 		## Tarefas
